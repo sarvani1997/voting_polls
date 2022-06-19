@@ -22,11 +22,13 @@ export const questionRouter = trpc
   .mutation("create", {
     input: z.object({
       question: z.string().min(5).max(600),
+      // options: z.string().array(),
     }),
     async resolve({ input }) {
       return await prisma.pollQuestions.create({
         data: {
           question: input.question,
+          options: [],
         },
       });
     },

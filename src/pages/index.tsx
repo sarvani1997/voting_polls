@@ -7,13 +7,13 @@ import { trpc } from "../utils/trpc";
 import React from "react";
 import Link from "next/link";
 
-const QuestionCreator: React.FC = () => {
-  const inputRef = React.useRef<HTMLInputElement>(null);
+const QuestionCreator = () => {
+  const inputRef = React.useRef<HTMLInputElement | null>(null);
   const client = trpc.useContext();
   const { mutate, isLoading } = trpc.useMutation("questions.create", {
     onSuccess: () => {
-      client.invalidateQueries(["questions.get=all"]);
-      if (inputRef.current) return;
+      client.invalidateQueries(["questions.get-all"]);
+      if (!inputRef.current) return;
       inputRef.current.value = "";
     },
   });
